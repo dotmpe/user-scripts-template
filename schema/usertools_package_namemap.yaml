@@ -1,0 +1,82 @@
+#  Name maps for +User-Tools source to ns1 dist
+#  1. globalized name
+#  2. other local alias name
+#  3. short tag name
+---
+about: |
+  Map source terms to NS1 dist terms.
+
+description: |
+
+  TODO: The document should be auto-amended after source scanning detects new
+  terms or changes.
+
+  Each top level mapping holds source defined terms for keys. The value is
+  normally a sequence of other notations or names that the term literally maps
+  onto, and for structured source names another nested sub-mapping is given.
+
+  If a source term is not present, it is simply converted through heuristic
+  means. This document provides for two things: slightly amended global meanings,
+  and ultra small tags.
+
+  The first name is the global, best choice, conservative text-range Id. If
+  there are multiple entries, then any of those subsequent name can be used
+  instead when the context is already clear, e.g. for within a call, module
+  and/or package.
+
+  Small tags make often printed Id's much less noisy. The package names in
+  particular want to specify such a short tag, so that it can be used to to make
+  an entire context rely on them. Ie. log event tagging or variable/function
+  naming is much more terse and readable when it can include small package or
+  module level tag for the specific context.
+
+package:
+  User-Tools:
+    - usertools
+    - usrtools
+  User-Scripts:
+    - userscripts
+    - usrscr
+    - us
+  User-Conf:
+    - userconfig
+    - usrconf
+    - uc
+
+module:
+  User-Conf:
+    Dev:
+      - developmentkit
+      - devkit
+      - dk
+  User-Scripts:
+    Format.Include:
+      - include
+      - inc
+    Docker:
+      - docker
+      - dckr
+    Namespace:
+      - namespace
+      - ns
+    #Operating-System:
+    #  - os
+    Part:
+      - partgroup
+    Pre-Processor:
+      - preprocessor
+      - preproc
+      - pp
+    Shell:
+      - cmdshell
+      - shell
+      - sh
+    String:
+      - string
+      - str
+    System:
+      - system
+      - sys
+    Terminal:
+      - vte
+      - term

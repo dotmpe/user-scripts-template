@@ -26,17 +26,17 @@ for var in LOCAL_{,SEED}_ENV LLM_CONF; do
 done
 
 \builtin . setup_common.bash
+\builtin . usenv_common.bash
+\builtin . env_common.bash
 
-\builtin command aider \
-  --no-show-release-notes --no-gitignore \
-  --no-auto-commits \
-  --no-dirty-commits \
-  --no-attribute-author \
-  --vim \
-  --attribute-commit-message-author \
-  --input-history-file .local/user/data/input/aider.input.history \
-  --chat-history-file .local/user/data/chat/aider.chat.history.md \
-  --config $HOME/.local/share/dotfiles/etc/aider/aider.conf.yml \
-  --model "${model:?}"
+# us-parts config and entry-point example:
 
-# Id: aider                                      vim:set ft=bash sw=2 sts=2 et:
+SCRIPTPATH+=:$PWD/tool/bash/part
+
+case "${0##*/}" in
+  ( run+boilerplate.* )
+      :to-do "script stuff"
+    ;;
+esac
+
+# Id: run+boilerplate                            vim:set ft=bash sw=2 sts=2 et:

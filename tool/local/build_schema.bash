@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Initial linkml target recipes
+
 :xredo-build-schema-recipe() {
   local {in,out}put
   IFS=: read -r input output <<<"${XREDO_TARGET##@build:schema:}"
@@ -12,6 +14,7 @@
   \builtin command gen-project "${gen_args[@]}" >&${USER_FD:?} ||
     :failerr "E$? from LinkML generator" || return
   redo-ifchange "$input" &&
+  redo-stamp <<< "$input" &&
   say.v "Generated output for schema ${input##*/}"
 }
 
@@ -29,7 +32,7 @@
     targets+=( @build:schema:"$input:$output/${base}" )
   done
   redo-ifchange "${targets[@]}" &&
-  redo-stamp <<< "${targets[*]}"
+  : # TEST: redo-stamp <<< "${targets[*]}"
 }
 
 #

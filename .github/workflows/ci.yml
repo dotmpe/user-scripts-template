@@ -2,15 +2,26 @@
 name: CI
 on:
   push:
-    branches: ["**"]
+    branches: ['**']
+    tags: ['v*']
   pull_request:
-    branches: ["**"]
-  workflow_dispatch:
+    branches: ['**']
+  workflow_dispatch: # NOTE: add manual triggers and parameters here
+    inputs:
+      local_env:
+        description: |
+          Set a relative path to update the script using configure.bash, or set an absolute path to leave the script along and let configure just run apply copy/symlink configurations.
+        required: false
+        default: '.local/env/github_web.bash'
+        type: string
 
 jobs:
   test:
     name: Build & Test
     runs-on: ubuntu-latest
+    env:
+      LOCAL_ENV: ${{ inputs.local_env || '.local/env/default.bash' }}
+      XREDO_CORES: ${{ inputs.xredo_cores || 10 }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -18,12 +29,16 @@ jobs:
           clean: true
           fetch-depth: 0
 
+      - name: Configure env
+        run: |
+          \builtin . ./tool/local/ci_config.bash
+
       - name: Install dependencies
         run: |
-          scr_pre=tool/local
-          \builtin . ${scr_pre:?}/ubuntu_ci_install.sh
+          \builtin . "${LOCAL_ENV:?}"
+          \builtin . ubuntu_ci_install.bash
 
       - name: Run Redo for all build/check/test targets
         run: |
-          scr_pre=tool/local
-          \builtin . ${scr_pre:?}/ci_run.sh
+          \builtin . "${LOCAL_ENV:?}"
+          \builtin . ci_run.bash
